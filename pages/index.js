@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import {gql, useMutation, useQuery, useSubscription} from "@apollo/client";
+import { Button } from '@audi/audi-ui-react';
 
 const sub = gql`
   subscription CounterChanged {
@@ -40,7 +41,7 @@ export default function Home() {
           <h1 className={styles.title}>
             Count: {data?.counterChanged || initialData?.counter}
           </h1>
-          <button onClick={() => incrementCounter()}>Increment</button>
+          <Button onClick={() => incrementCounter()}>Increment</Button>
       </main>
 
       <footer className={styles.footer}>

@@ -1,12 +1,14 @@
-import '../styles/globals.css'
 import { ApolloProvider } from "@apollo/client";
 import client from "../lib/apollo-client";
+import { audiLightTheme, AudiPlatformProvider } from '@audi/audi-ui-react'
 
 function MyApp({ Component, pageProps }) {
   return (
-      <ApolloProvider client={client}>
-        <Component {...pageProps} />
+    <AudiPlatformProvider theme={audiLightTheme}>
+      <ApolloProvider client={client}>    
+          <Component {...pageProps} />
       </ApolloProvider>
+    </AudiPlatformProvider>
   )
 }
 
