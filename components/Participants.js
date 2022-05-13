@@ -1,4 +1,4 @@
-import { Avatar, Layout, Text } from "@audi/audi-ui-react";
+import {Avatar, Layout, Text} from "@audi/audi-ui-react";
 import styled from 'styled-components';
 
 const WideTable = styled.table`
@@ -17,15 +17,15 @@ const BigAvatar = styled(Avatar)`
 
 
 export default function Participants({participants}) {
-    return(
+    return (
         <div>
             <Text variant="order2" weight="bold" spaceStackStart="l">Participants</Text>
-            <WideTable>
-                <colgroup>
-                    <col span="1" style={{width: "70%"}}/>
-                    <col span="1" style={{width: "30%"}}/>
-                </colgroup>
-                <thead>
+            {participants?.length > 0 ? (<WideTable>
+                    <colgroup>
+                        <col span="1" style={{width: "70%"}}/>
+                        <col span="1" style={{width: "30%"}}/>
+                    </colgroup>
+                    <thead>
                     <tr>
                         <th scope="col">
                             <Text weight="bold">Name</Text>
@@ -34,27 +34,29 @@ export default function Participants({participants}) {
                             <Text weight="bold">Vote Status</Text>
                         </th>
                     </tr>
-                </thead>
-                <tbody>
-                {participants.map((participant, index)=>(
-                    <tr key={index}>
-                        <td>
-                            <Layout>
-                                <BigAvatar size="medium" label={participant.emoji} spaceInlineEnd='m' />
-                                <div>
-                                    <Text variant="order3">{participant.name}</Text> 
-                                    <Text>{participant.type}</Text>
-                                </div>
-                            </Layout>
-                        </td>
-                        <td>
-                            <Text>{participant.status}</Text> 
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </WideTable>
-
+                    </thead>
+                    <tbody>
+                    {participants.map((participant, index) => (
+                        <tr key={index}>
+                            <td>
+                                <Layout>
+                                    <BigAvatar size="medium" label={participant.emoji} spaceInlineEnd='m'/>
+                                    <div>
+                                        <Text variant="order3">{participant.name}</Text>
+                                        <Text>{participant.type}</Text>
+                                    </div>
+                                </Layout>
+                            </td>
+                            <td>
+                                <Text>{participant.status}</Text>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </WideTable>)
+                :
+                <Text>No participants yet...</Text>
+            }
         </div>
 
     )

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import Head from "next/head";
 import styled from 'styled-components'
 import {gql, useMutation, useQuery, useSubscription} from "@apollo/client";
-import { useState } from "react"
+import {useEffect, useState} from "react"
 
 import Header from "../../components/Header";
 import StoriesList from "../../components/StoriesList"
@@ -14,6 +14,8 @@ import StartVote from '../../components/stages/StartVote';
 import Vote from '../../components/stages/Vote';
 import Wait from '../../components/stages/Wait';
 import Results from '../../components/stages/Results';
+import UpdateUserModal from "../../components/UpdateUserModal";
+import {useLocalStorage} from "../../hooks/useLocalStorage";
 
 const stories = [
   {name:'EPIC-123', description: 'test', status:'Complete', points: '?'},
@@ -55,7 +57,10 @@ const roomStateQuery = gql`
   query RoomState($roomId: String) {
     roomState(id: $roomId) {
       name
-      users
+      users {
+        name
+        emoji
+      }
     }
   }
 `;
@@ -72,6 +77,16 @@ const roomStateSubscription = gql`
   }
 `;
 
+const createUserMutation = gql`
+  mutation CreateUser($roomId: String, $userName: String, $emoji: String) {
+    createUser(roomId: $roomId, name: $userName, emoji: $emoji) {
+      name
+      emoji
+      vote
+    }
+  }
+`
+
 const ADD_STORY = 'ADD_STORY'
 const START_VOTE = 'START_VOTE'
 const VOTE = 'VOTE'
@@ -79,27 +94,49 @@ const WAIT = 'WAIT'
 const RESULTS = 'RESULTS'
 
 const Room = ({roomId}) => {
+  const [userName, setUserName] = useLocalStorage("name", "");
+  const { data: initialData } = useQuery(roomStateQuery,{
+    variables: { roomId },
+  })
+  const { data } = useSubscription(roomStateSubscription,
+      { variables: { roomId } }
+  );
+  const [createUser] = useMutation(createUserMutation, {
+    variables: {roomId}
+  });
+  console.log('🚀 ~ file: [roomId].js ~ line 90 ~ Room ~ data', data);
+
+  const roomName = data?.roomUpdated?.name || initialData?.roomState?.name;
+  const users = data?.roomUpdated?.users ||  initialData?.roomState?.users
+
   const [stage, setStage] = useState(START_VOTE);
   const moveToVote = () => setStage(VOTE);
   const moveToWait = () => setStage(WAIT);
   const moveToResults = () => setStage(RESULTS);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  // Add story modal state
+  const [isOpenAddStory, setIsOpenAddStory] = useState(false);
+  const openModalAddStory = () => setIsOpenAddStory(true);
+  const closeModalAddStory = () => setIsOpenAddStory(false);
 
-  // const router = useRouter()
-  // const { roomId } = router.query
-  const { data: initialData } = useQuery(roomStateQuery,{
-    variables: { roomId },
-  })
-  const { data } = useSubscription(roomStateSubscription,
-    { variables: { roomId } }
-  );
-  console.log('🚀 ~ file: [roomId].js ~ line 87 ~ Room ~ initialData', initialData);
-  console.log('🚀 ~ file: [roomId].js ~ line 90 ~ Room ~ data', data);
+  // Update user modal state
+  const [isOpenUpdateUser, setIsOpenUpdateUser] = useState(false);
+  const openModalUpdateUser = () => setIsOpenUpdateUser(true);
+  const closeModalUpdateUser = () => {
+    if (!users.find(user => user.name === userName)) {
+      createUser({variables: {userName, emoji: '🥳'}})
+    }
+    setIsOpenUpdateUser(false);
+  }
 
-  const roomName = data?.roomState?.name || initialData?.roomState?.name;
+  useEffect(() => {
+    if (!userName) {
+      openModalUpdateUser()
+    }
+  }, [userName])
+
+
+
   const storyName = 'EPIC-122';
   const commonProps = {roomName, storyName}
 
@@ -133,19 +170,20 @@ const Room = ({roomId}) => {
       </Head>
 
       <main>
-        <Header username={'testUserName'}/>
+        <Header username={userName} showUsername={!isOpenUpdateUser}/>
 
         <RoomLayout>
           <div>
             {StageComponent}
-            <StoriesList stories={stories} addStory={openModal} />
+            <StoriesList stories={stories} addStory={openModalAddStory} />
           </div>
           <div>
-            <Participants participants={participants} />
+            <Participants participants={users} />
             <Invite roomId={roomId} />
           </div>
         </RoomLayout>
-        <AddStoryModal isOpen={isOpen} closeModal={closeModal} />
+        <AddStoryModal isOpen={isOpenAddStory} closeModal={closeModalAddStory} />
+        <UpdateUserModal isOpen={isOpenUpdateUser} closeModal={closeModalUpdateUser} userName={userName} setUserName={setUserName} />
       </main>
     </div>
   )

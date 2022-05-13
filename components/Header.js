@@ -7,12 +7,12 @@ const HeaderContainer = styled.nav`
     border-bottom: solid 2px black;
 `
 
-export default function Header({username}) {
+export default function Header({username, showUsername= true}) {
     return(
         <HeaderContainer>
             <Layout align='end' justify='between'>
                 <Image src="/audi.svg" alt="Audi Logo" width='69' height='24' />
-                <Text variant="order3">{username}</Text>
+                {showUsername && <Text variant="order3">{username}</Text>}
             </Layout>
         </HeaderContainer>
 
