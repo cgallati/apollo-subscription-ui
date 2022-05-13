@@ -27,10 +27,9 @@ const vote = (ballot, moveToWait) => {
     moveToWait();
 }
 
-export default function Vote({roomName, storyName, moveToWait}) {
+export default function Vote({ storyName, moveToWait}) {
     return(
         <StoriesContainer justify='center' align='center' direction='column'>
-            <Text variant="order1" weight="bold">{roomName} Room</Text>
             <Text variant="order2" weight="bold" spaceStackEnd="xl">{storyName}</Text>
             <CardsLayout>
                 {ballots.map((ballot, index) =>

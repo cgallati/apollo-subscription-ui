@@ -2,6 +2,7 @@ import Head from "next/head";
 import styled from 'styled-components'
 import {gql, useMutation, useQuery, useSubscription} from "@apollo/client";
 import {useEffect, useState} from "react"
+import { Divider, Text } from "@audi/audi-ui-react";
 
 import Header from "../../components/Header";
 import AddStoryModal from "../../components/AddStoryModal";
@@ -16,6 +17,22 @@ import Wait from '../../components/stages/Wait';
 import Results from '../../components/stages/Results';
 import UpdateUserModal from "../../components/UpdateUserModal";
 import {useLocalStorage} from "../../hooks/useLocalStorage";
+
+const RoomName = styled(Text)`
+  text-align: center;
+`
+
+const SideBar = styled.div`
+  padding: 1rem;
+  background-color: white;
+`
+
+const RoomLayout = styled.div`
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+  grid-template-rows: 1fr;
+  background-color: #f2f2f2;
+`;
 
 const getRandomEmoji = () => {
   const EMOJIS = ['😀','🥳','😂','😁','🧐','🥺','😺','😆','🤪','😋']
@@ -38,13 +55,6 @@ const votes = [
   {value:'13', votes:1},
   {value:'???', votes:0},
 ];
-
-const RoomLayout = styled.div`
-  display: grid;
-  grid-template-columns: 2.5fr 1fr;
-  grid-template-rows: 1fr;
-`;
-
 
 const roomStateQuery = gql`
   query RoomState($roomId: String) {
@@ -148,26 +158,25 @@ const Room = ({roomId}) => {
 
 
   const storyName = 'EPIC-122';
-  const commonProps = {roomName, storyName}
 
   if(stage !== ADD_STORY && stories?.length === 0) setStage(ADD_STORY);
 
   let StageComponent;
 
   if (stage === ADD_STORY) 
-    StageComponent = <AddStory roomName={roomName} openModal={openModal} />;
-    // StageComponent = <Results {...commonProps} votes={votes} moveToStartVote={moveToStartVote} />;
+    StageComponent = <AddStory openModal={openModal} />;
+    // StageComponent = <Results storyName={storyName} votes={votes} moveToStartVote={moveToStartVote} />;
 
   if (stage === START_VOTE) 
-    StageComponent = <StartVote {...commonProps} moveToVote={moveToVote} />;
+    StageComponent = <StartVote storyName={storyName} moveToVote={moveToVote} />;
   if (stage === VOTE) 
-    StageComponent = <Vote {...commonProps} moveToWait={moveToWait} />;
+    StageComponent = <Vote storyName={storyName} moveToWait={moveToWait} />;
   if (stage === WAIT) {
-    StageComponent = <Wait {...commonProps} yetToVote={yetToVote} moveToResults={moveToResults} />;
+    StageComponent = <Wait storyName={storyName} yetToVote={yetToVote} moveToResults={moveToResults} />;
   }
   if (stage === RESULTS) 
     StageComponent = <Results 
-      {...commonProps}
+      storyName={storyName}
       votes={votes} 
       moveToVote={moveToVote}
     />;
@@ -187,10 +196,12 @@ const Room = ({roomId}) => {
             {StageComponent}
             <VoteLog stories={stories} />
           </div>
-          <div>
+          <SideBar>
+            <RoomName variant="order2" weight="bold" spaceStackStart="l" spaceStackEnd="l">{roomName}</RoomName>
+            <Divider />
             <Participants participants={users} />
             <Invite roomId={roomId} />
-          </div>
+          </SideBar>
         </RoomLayout>
         <UpdateUserModal isOpen={isOpenUpdateUser} closeModal={closeModalUpdateUser} userName={userName} setUserName={setUserName} />
         <AddStoryModal isOpen={isOpen} closeModal={closeModal} roomId={roomId} />

@@ -26,12 +26,11 @@ const GreyedOutBallot = styled(Ballot)`
 `
 
 
-export default function Results({roomName, storyName, votes, moveToStartVote}) {
+export default function Results({ storyName, votes, moveToStartVote}) {
     const totalVotes = 5;
 
     return(
         <StoriesContainer justify='center' align='center' direction='column'>
-            <Text variant="order1" weight="bold">{roomName} Room</Text>
             <Text variant="order2" weight="bold" spaceStackEnd="xl">{storyName}</Text>
             <CardsLayout>
                 {votes.map((vote, index) =>

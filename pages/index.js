@@ -23,7 +23,7 @@ export default function CreateRoom() {
   return (
     <div>
       <Head>
-        <title>Create Poker Room</title>
+        <title>Poker</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

@@ -6,12 +6,11 @@ const NoStoriesContainer = styled(Layout)`
     height: 50vh;
     `
 
-export default function Wait({roomName, storyName, yetToVote, moveToResults}) {
+export default function Wait({ storyName, yetToVote, moveToResults}) {
     const yetToVoteNames = yetToVote.map(person=>person.name)
 
     return(
         <NoStoriesContainer justify='center' align='center' direction='column'>
-            <Text variant="order1" weight="bold">{roomName} Room</Text>
             <Text variant="order2" weight="bold" spaceStackEnd="xxxl">{storyName}</Text>
 
             <Text variant="order2" weight="bold">Vote submitted</Text>

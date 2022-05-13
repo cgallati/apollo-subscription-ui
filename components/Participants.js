@@ -1,4 +1,4 @@
-import { Avatar, Layout, Text } from "@audi/audi-ui-react";
+import { Divider, Layout, Text } from "@audi/audi-ui-react";
 import styled from 'styled-components';
 
 const WideTable = styled.table`
@@ -55,8 +55,9 @@ export default function Participants({participants}) {
                     </tbody>
                 </WideTable>)
                 :
-                <Text>No participants yet...</Text>
+                <Text spaceStackStart="xl">No participants yet...</Text>
             }
+            <Divider spaceStackStart="xl" />
         </div>
 
     )

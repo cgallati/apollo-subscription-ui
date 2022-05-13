@@ -1,9 +1,21 @@
 import { Avatar, Table, TableHeader,TableRow, TableColumnHeadingCell, TableBody, TableCell, Text, Button, Divider, Layout } from "@audi/audi-ui-react"
 import styled from 'styled-components'
 
+const VoteContainer = styled.div`
+  background-color: #f2f2f2;
+  padding-left: 10rem;
+  padding-right: 10rem;
+`
+
+const VoteCard = styled.div`
+  padding: 1rem;
+  background-color: white;
+`
+
 export default function VoteLog({stories}) {
     return(
-<div>
+<VoteContainer>
+  <VoteCard>
 <Table caption="Vote Log">
   <colgroup>
     <col span="1"/>
@@ -69,7 +81,8 @@ export default function VoteLog({stories}) {
     </TableRow>    
     ))}
   </TableBody>
-</Table>
-</div>
+  </Table>
+</VoteCard>
+</VoteContainer>
     )
 }

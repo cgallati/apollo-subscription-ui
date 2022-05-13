@@ -10,10 +10,9 @@ const NoStoriesContainer = styled(Layout)`
     height: 50vh;
     `
 
-export default function AddStory({roomName, openModal}) {
+export default function AddStory({openModal}) {
     return(
         <NoStoriesContainer justify='center' align='center' direction='column'>
-          <Text variant="order1" weight="bold" spaceStackEnd="xl">{roomName} Room</Text>
           <BigButton variant='primary' onClick={openModal}>
               Add Story
             </BigButton>
