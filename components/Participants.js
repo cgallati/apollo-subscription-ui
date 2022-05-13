@@ -9,10 +9,10 @@ const WideTable = styled.table`
     }
 `
 
-const BigAvatar = styled(Avatar)`
-    span {
-        font-size: 2rem !important;
-    }
+const BigAvatar = styled.p`
+    font-size: 2rem;
+    margin: 0;
+    margin-right: 1rem;
 `
 
 
@@ -39,8 +39,8 @@ export default function Participants({participants}) {
                 {participants.map((participant, index)=>(
                     <tr key={index}>
                         <td>
-                            <Layout>
-                                <BigAvatar size="medium" label={participant.emoji} spaceInlineEnd='m' />
+                            <Layout align='center'>
+                                <BigAvatar>{participant.emoji}</BigAvatar>
                                 <div>
                                     <Text variant="order3">{participant.name}</Text> 
                                     <Text>{participant.type}</Text>
