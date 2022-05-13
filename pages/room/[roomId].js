@@ -115,6 +115,7 @@ const Room = ({roomId}) => {
   const closeModal = () => setIsOpen(false);
 
   const [stage, setStage] = useState(START_VOTE);
+  const moveToStartVote = () => setStage(START_VOTE);
   const moveToVote = () => setStage(VOTE);
   const moveToWait = () => setStage(WAIT);
   const moveToResults = () => setStage(RESULTS);
@@ -151,9 +152,10 @@ const Room = ({roomId}) => {
 
   if (stage === ADD_STORY) 
     StageComponent = <AddStory roomName={roomName} openModal={openModal} />;
+    // StageComponent = <Results {...commonProps} votes={votes} moveToStartVote={moveToStartVote} />;
+
   if (stage === START_VOTE) 
     StageComponent = <StartVote {...commonProps} moveToVote={moveToVote} />;
-    // StageComponent = <Results {...commonProps} votes={votes} moveToVote={moveToVote} />;
   if (stage === VOTE) 
     StageComponent = <Vote {...commonProps} moveToWait={moveToWait} />;
   if (stage === WAIT) {
