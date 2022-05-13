@@ -64,7 +64,10 @@ const roomStateSubscription = gql`
   subscription RoomUpdated($roomId: String) {
     roomUpdated(id: $roomId) {
       name
-      users
+      users {
+        name
+        emoji
+      }
     }
   }
 `;
@@ -75,7 +78,7 @@ const VOTE = 'VOTE'
 const WAIT = 'WAIT'
 const RESULTS = 'RESULTS'
 
-const Room = () => {
+const Room = ({roomId}) => {
   const [stage, setStage] = useState(START_VOTE);
   const moveToVote = () => setStage(VOTE);
   const moveToWait = () => setStage(WAIT);
@@ -85,8 +88,8 @@ const Room = () => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const router = useRouter()
-  const { roomId } = router.query
+  // const router = useRouter()
+  // const { roomId } = router.query
   const { data: initialData } = useQuery(roomStateQuery,{
     variables: { roomId },
   })
@@ -146,6 +149,12 @@ const Room = () => {
       </main>
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  return {
+    props: {roomId: context.query.roomId},
+  }
 }
 
 export default Room
