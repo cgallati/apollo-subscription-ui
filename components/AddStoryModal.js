@@ -20,7 +20,7 @@ const createStoryMutation = gql`
 }
 `
 
-export default function AddStoryModal({isOpen, closeModal, roomId}) {
+export default function AddStoryModal({isOpen, closeModal, roomId, moveToStartVote}) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [createStory] = useMutation(createStoryMutation, {
@@ -32,6 +32,7 @@ export default function AddStoryModal({isOpen, closeModal, roomId}) {
       setName( '')
       setDescription('')
       closeModal()
+      moveToStartVote()
     }
 
     return(

@@ -60,6 +60,7 @@ const roomStateQuery = gql`
         id
         points
       }
+      currentRoundId
     }
   }
 `;
@@ -78,6 +79,7 @@ const roomStateSubscription = gql`
         id
         points
       }
+      currentRoundId
     }
   }
 `;
@@ -90,6 +92,12 @@ const createUserMutation = gql`
       vote
     }
   }
+`
+
+const startVoteMutation = gql`
+mutation StartRound($roomId: String, $id: String) {
+  startRound(roomId: $roomId, id: $id) 
+}
 `
 
 const ADD_STORY = 'ADD_STORY'
@@ -108,6 +116,9 @@ const Room = ({roomId}) => {
       { variables: { roomId } }
   );
   const [createUser] = useMutation(createUserMutation, {
+    variables: {roomId}
+  });
+  const [startVote] = useMutation(startVoteMutation, {
     variables: {roomId}
   });
   console.log('🚀 ~ file: [roomId].js ~ line 87 ~ Room ~ initialData', initialData);
@@ -159,7 +170,7 @@ const Room = ({roomId}) => {
     // StageComponent = <Results {...commonProps} votes={votes} moveToStartVote={moveToStartVote} />;
 
   if (stage === START_VOTE) 
-    StageComponent = <StartVote {...commonProps} moveToVote={moveToVote} />;
+    StageComponent = <StartVote {...commonProps} moveToVote={moveToVote} startVote={startVote} />;
   if (stage === VOTE) 
     StageComponent = <Vote {...commonProps} moveToWait={moveToWait} />;
   if (stage === WAIT) {
@@ -193,7 +204,7 @@ const Room = ({roomId}) => {
           </div>
         </RoomLayout>
         <UpdateUserModal isOpen={isOpenUpdateUser} closeModal={closeModalUpdateUser} userName={userName} setUserName={setUserName} />
-        <AddStoryModal isOpen={isOpen} closeModal={closeModal} roomId={roomId} />
+        <AddStoryModal isOpen={isOpen} closeModal={closeModal} roomId={roomId} moveToStartVote={moveToStartVote} />
       </main>
     </div>
   )
