@@ -208,7 +208,7 @@ const Room = ({roomId}) => {
             <VoteLog stories={stories} />
           </div>
           <SideBar>
-            <RoomName variant="order2" weight="bold" spaceStackStart="l" spaceStackEnd="l">{roomName}</RoomName>
+            <RoomName variant="order1" weight="bold" spaceStackStart="l" spaceStackEnd="l">{roomName}</RoomName>
             <Divider />
             <Participants participants={users} />
             <Invite roomId={roomId} />

@@ -6,10 +6,8 @@ const BigButton = styled(Button)`
 `
 
 const StoriesContainer = styled(Layout)`
-   height: 50vh;
+   height: 60vh;
 `
-
-
 
 export default function StartVote({storyName, moveToVote, startVote}) {
     return(

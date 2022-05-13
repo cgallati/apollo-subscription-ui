@@ -19,7 +19,7 @@ const BigAvatar = styled.p`
 export default function Participants({participants}) {
     return (
         <div>
-            <Text variant="order2" weight="bold" spaceStackStart="l">Participants</Text>
+            <Text variant="order3" weight="bold" spaceStackStart="l">Participants</Text>
             {participants?.length > 0 ? (<WideTable>
                     <colgroup>
                         <col span="1" style={{width: "70%"}}/>
