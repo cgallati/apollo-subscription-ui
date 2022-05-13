@@ -23,11 +23,11 @@ const stories = [
   // {name:'EPIC-121', description: '', status:'Complete', points: '5'},
 ];
 
-const participants = [
-  {name:'Justis', emoji:'🙂', type: 'Moderator', status:'In Progress'},
-  {name:'Eric', emoji:'🙂', type: 'Participant', status:'In Progress'},
-  {name:'Chad', emoji:'🙂', type: 'Participant', status:'Complete'},
-];
+const getRandomEmoji = () => {
+  const EMOJIS = ['😀','🥳','😂','😁','🧐','🥺','😺','😆','🤪','😋']
+  const index = Math.floor(Math.random() * EMOJIS.length)
+  return EMOJIS[index]
+}
 
 const yetToVote = [
   {name:'Justis', emoji:'🙂', type: 'Moderator', status:'In Progress'},
@@ -128,8 +128,8 @@ const Room = ({roomId}) => {
   const [isOpenUpdateUser, setIsOpenUpdateUser] = useState(false);
   const openModalUpdateUser = () => setIsOpenUpdateUser(true);
   const closeModalUpdateUser = () => {
-    if (!users.find(user => user.name === userName)) {
-      createUser({variables: {userName, emoji: '🥳'}})
+    if (!users?.find(user => user.name === userName)) {
+      createUser({variables: {userName, emoji: getRandomEmoji()}})
     }
     setIsOpenUpdateUser(false);
   }

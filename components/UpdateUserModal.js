@@ -3,22 +3,15 @@ import styled from 'styled-components'
 import { useState } from "react"
 import ReactModal from 'react-modal';
 import { audiLightTheme, AudiPlatformProvider } from '@audi/audi-ui-react'
-// const isBrowser = !(typeof window === 'undefined')
-// let Picker = import('emoji-picker-react').catch(() => 'canceling import on server')
+
 
 const WideInput = styled(TextField)`
     width: 300px;
 `
 
 
-export default function UpdateUserModal({isOpen, closeModal, userName, setUserName}) {
 
-    // const [chosenEmoji, setChosenEmoji] = useState(null);
-    //
-    // const onEmojiClick = (event, emojiObject) => {
-    //     setChosenEmoji(emojiObject);
-    // };
-
+export default function UpdateUserModal({isOpen, closeModal, userName, setUserName, }) {
     return(
         <ReactModal 
         isOpen={isOpen} 
