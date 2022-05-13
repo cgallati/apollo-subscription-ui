@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 const NoStoriesContainer = styled(Layout)`
     width: 100%;
-    height: 100%;
-`
+    height: 50vh;
+    `
 
 export default function Wait({roomName, storyName, yetToVote, moveToResults}) {
     const yetToVoteNames = yetToVote.map(person=>person.name)

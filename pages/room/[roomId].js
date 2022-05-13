@@ -4,6 +4,8 @@ import {gql, useMutation, useQuery, useSubscription} from "@apollo/client";
 import {useEffect, useState} from "react"
 
 import Header from "../../components/Header";
+import AddStoryModal from "../../components/AddStoryModal";
+
 import VoteLog from "../../components/VoteLog"
 import Participants from '../../components/Participants';
 import Invite from '../../components/Invite';
@@ -16,9 +18,9 @@ import UpdateUserModal from "../../components/UpdateUserModal";
 import {useLocalStorage} from "../../hooks/useLocalStorage";
 
 const stories = [
-  {name:'EPIC-123', description: 'test', status:'In Progress', points: '???'},
-  {name:'EPIC-122', description: 'test', status:'Complete', points: '1'},
-  {name:'EPIC-121', description: '', status:'Complete', points: '5'},
+  // {name:'EPIC-123', description: 'test', status:'In Progress', points: '???'},
+  // {name:'EPIC-122', description: 'test', status:'Complete', points: '1'},
+  // {name:'EPIC-121', description: '', status:'Complete', points: '5'},
 ];
 
 const participants = [
@@ -92,6 +94,7 @@ const RESULTS = 'RESULTS'
 
 const Room = ({roomId}) => {
   const [userName, setUserName] = useLocalStorage("name", "");
+
   const { data: initialData } = useQuery(roomStateQuery,{
     variables: { roomId },
   })
@@ -106,6 +109,10 @@ const Room = ({roomId}) => {
 
   const roomName = data?.roomUpdated?.name || initialData?.roomState?.name;
   const users = data?.roomUpdated?.users ||  initialData?.roomState?.users
+
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   const [stage, setStage] = useState(START_VOTE);
   const moveToVote = () => setStage(VOTE);
@@ -143,7 +150,7 @@ const Room = ({roomId}) => {
   let StageComponent;
 
   if (stage === ADD_STORY) 
-    StageComponent = <AddStory roomName={roomName} />;
+    StageComponent = <AddStory roomName={roomName} openModal={openModal} />;
   if (stage === START_VOTE) 
     StageComponent = <StartVote {...commonProps} moveToVote={moveToVote} />;
     // StageComponent = <Results {...commonProps} votes={votes} moveToVote={moveToVote} />;
@@ -180,6 +187,7 @@ const Room = ({roomId}) => {
           </div>
         </RoomLayout>
         <UpdateUserModal isOpen={isOpenUpdateUser} closeModal={closeModalUpdateUser} userName={userName} setUserName={setUserName} />
+        <AddStoryModal isOpen={isOpen} closeModal={closeModal} />
       </main>
     </div>
   )

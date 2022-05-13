@@ -40,7 +40,7 @@ export default function AddStoryModal({isOpen, closeModal}) {
                   required 
                 />
                 <WideInput 
-                  label="Room Name" 
+                  label="Story Description" 
                   inputId='story-description-input' 
                   minlength='2' 
                   spaceStackEnd="xxl" 
