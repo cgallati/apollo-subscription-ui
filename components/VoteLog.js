@@ -1,7 +1,7 @@
 import { Avatar, Table, TableHeader,TableRow, TableColumnHeadingCell, TableBody, TableCell, Text, Button, Divider, Layout } from "@audi/audi-ui-react"
 import styled from 'styled-components'
 
-export default function VoteLog({stories, addStory}) {
+export default function VoteLog({stories}) {
     return(
 <div>
 <Table caption="Vote Log">
@@ -56,7 +56,7 @@ export default function VoteLog({stories, addStory}) {
         </Text>
       </TableCell>
       <TableCell columnHeading="Column Heading 2">
-            <Text variant="copy1">{story.description}</Text>
+            <Text variant="copy1">{story.desc}</Text>
       </TableCell>
       <TableCell columnHeading="Column Heading 3">
         <Text variant="copy1">

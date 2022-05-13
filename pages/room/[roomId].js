@@ -17,12 +17,6 @@ import Results from '../../components/stages/Results';
 import UpdateUserModal from "../../components/UpdateUserModal";
 import {useLocalStorage} from "../../hooks/useLocalStorage";
 
-const stories = [
-  // {name:'EPIC-123', description: 'test', status:'In Progress', points: '???'},
-  // {name:'EPIC-122', description: 'test', status:'Complete', points: '1'},
-  // {name:'EPIC-121', description: '', status:'Complete', points: '5'},
-];
-
 const getRandomEmoji = () => {
   const EMOJIS = ['😀','🥳','😂','😁','🧐','🥺','😺','😆','🤪','😋']
   const index = Math.floor(Math.random() * EMOJIS.length)
@@ -60,6 +54,12 @@ const roomStateQuery = gql`
         name
         emoji
       }
+      rounds {
+        name
+        desc
+        id
+        points
+      }
     }
   }
 `;
@@ -71,6 +71,12 @@ const roomStateSubscription = gql`
       users {
         name
         emoji
+      }
+      rounds {
+        name
+        desc
+        id
+        points
       }
     }
   }
@@ -109,20 +115,18 @@ const Room = ({roomId}) => {
 
   const roomName = data?.roomUpdated?.name || initialData?.roomState?.name;
   const users = data?.roomUpdated?.users ||  initialData?.roomState?.users
+  const stories = data?.roomUpdated?.rounds ||  initialData?.roomState?.rounds || []
 
+  // Add story modal state
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  // page state
   const [stage, setStage] = useState(START_VOTE);
   const moveToVote = () => setStage(VOTE);
   const moveToWait = () => setStage(WAIT);
   const moveToResults = () => setStage(RESULTS);
-
-  // Add story modal state
-  const [isOpenAddStory, setIsOpenAddStory] = useState(false);
-  const openModalAddStory = () => setIsOpenAddStory(true);
-  const closeModalAddStory = () => setIsOpenAddStory(false);
 
   // Update user modal state
   const [isOpenUpdateUser, setIsOpenUpdateUser] = useState(false);
@@ -145,7 +149,7 @@ const Room = ({roomId}) => {
   const storyName = 'EPIC-122';
   const commonProps = {roomName, storyName}
 
-  if(stage !== ADD_STORY && stories.length === 0) setStage(ADD_STORY);
+  if(stage !== ADD_STORY && stories?.length === 0) setStage(ADD_STORY);
 
   let StageComponent;
 
@@ -187,7 +191,7 @@ const Room = ({roomId}) => {
           </div>
         </RoomLayout>
         <UpdateUserModal isOpen={isOpenUpdateUser} closeModal={closeModalUpdateUser} userName={userName} setUserName={setUserName} />
-        <AddStoryModal isOpen={isOpen} closeModal={closeModal} />
+        <AddStoryModal isOpen={isOpen} closeModal={closeModal} roomId={roomId} />
       </main>
     </div>
   )

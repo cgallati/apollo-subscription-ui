@@ -3,15 +3,36 @@ import styled from 'styled-components'
 import { useState } from "react"
 import ReactModal from 'react-modal';
 import { audiLightTheme, AudiPlatformProvider } from '@audi/audi-ui-react'
+import {gql, useMutation} from "@apollo/client";
 
 const WideInput = styled(TextField)`
     width: 300px;
 `
 
+const createStoryMutation = gql`
+  mutation Mutation($roomId: String, $name: String, $desc: String) {
+  createRound(roomId: $roomId, name: $name, desc: $desc) {
+    id
+    name
+    desc
+    points
+  }
+}
+`
 
-export default function AddStoryModal({isOpen, closeModal}) {
+export default function AddStoryModal({isOpen, closeModal, roomId}) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [createStory] = useMutation(createStoryMutation, {
+      variables: {roomId}
+  })
+
+    const handleCreateStory = () => {
+      createStory({variables: {name, desc: description}})
+      setName( '')
+      setDescription('')
+      closeModal()
+    }
 
     return(
         <ReactModal 
@@ -48,7 +69,7 @@ export default function AddStoryModal({isOpen, closeModal}) {
                   onChange={(e=>setDescription(e.target.value))}
                   required 
                 />
-                <Button variant="primary">Add Story</Button>
+                <Button variant="primary" onClick={handleCreateStory}>Add Story</Button>
               </Layout>
             </AudiPlatformProvider>
         </ReactModal>
