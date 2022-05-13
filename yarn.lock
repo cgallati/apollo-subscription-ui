@@ -831,6 +831,13 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
+copy-to-clipboard@^3.2.0:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/copy-to-clipboard/-/copy-to-clipboard-3.3.1.tgz#115aa1a9998ffab6196f93076ad6da3b913662ae"
+  integrity sha512-i13qo6kIHTTpCm8/Wup+0b1mVWETvu2kIMzKoK8FpkLkFxlt0znUAHcMzox+T8sPlqtZXq3CulEjQHsYiGFJUw==
+  dependencies:
+    toggle-selection "^1.0.6"
+
 core-js-pure@^3.20.2:
   version "3.22.5"
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.22.5.tgz#bdee0ed2f9b78f2862cda4338a07b13a49b6c9a9"
@@ -2254,6 +2261,11 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
+toggle-selection@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/toggle-selection/-/toggle-selection-1.0.6.tgz#6e45b1263f2017fa0acc7d89d78b15b8bf77da32"
+  integrity sha1-bkWxJj8gF/oKzH2J14sVuL932jI=
+
 ts-invariant@^0.10.0:
   version "0.10.2"
   resolved "https://registry.yarnpkg.com/ts-invariant/-/ts-invariant-0.10.2.tgz#ae0413fa60cc3603edf8709d9a11db9d9ddb335a"
@@ -2316,6 +2328,13 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+use-copy@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/use-copy/-/use-copy-0.0.2.tgz#f465fb9b739dfda070ba79d370dc513ca626cd1b"
+  integrity sha512-Vft5XzLq34FNSovAIVPkfo9BgzKyw4nI+eEO9mWfGNwi/30P7ZBrnHCLpKTcsdS2nyVqN7gOdwiZpvhsWG+6Og==
+  dependencies:
+    copy-to-clipboard "^3.2.0"
 
 use-sync-external-store@^1.0.0:
   version "1.1.0"

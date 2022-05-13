@@ -13,7 +13,7 @@ const CardsLayout = styled.div`
 `;
 
 const Ballot = styled(Layout)`
-    background: #2526fe;
+    background: #ffaa00;
     width: 150px;
     height: 100px;
     border: 2px solid black;

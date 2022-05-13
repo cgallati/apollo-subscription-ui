@@ -1,14 +1,12 @@
-import { useRouter } from 'next/router'
 import Head from "next/head";
 import styled from 'styled-components'
 import {gql, useMutation, useQuery, useSubscription} from "@apollo/client";
 import {useEffect, useState} from "react"
 
 import Header from "../../components/Header";
-import StoriesList from "../../components/StoriesList"
+import VoteLog from "../../components/VoteLog"
 import Participants from '../../components/Participants';
 import Invite from '../../components/Invite';
-import AddStoryModal from '../../components/AddStoryModal';
 import AddStory from '../../components/stages/AddStory';
 import StartVote from '../../components/stages/StartVote';
 import Vote from '../../components/stages/Vote';
@@ -18,9 +16,9 @@ import UpdateUserModal from "../../components/UpdateUserModal";
 import {useLocalStorage} from "../../hooks/useLocalStorage";
 
 const stories = [
-  {name:'EPIC-123', description: 'test', status:'Complete', points: '?'},
-  {name:'EPIC-122', description: 'test', status:'In Progress', points: '1'},
-  {name:'EPIC-121', description: 'test', status:'Begin Voting', points: '5'},
+  {name:'EPIC-123', description: 'test', status:'In Progress', points: '???'},
+  {name:'EPIC-122', description: 'test', status:'Complete', points: '1'},
+  {name:'EPIC-121', description: '', status:'Complete', points: '5'},
 ];
 
 const participants = [
@@ -33,7 +31,6 @@ const yetToVote = [
   {name:'Justis', emoji:'🙂', type: 'Moderator', status:'In Progress'},
   {name:'Eric', emoji:'🙂', type: 'Participant', status:'In Progress'},
 ];
-
 
 const votes = [
   {value:'1/2', votes:0},
@@ -104,6 +101,7 @@ const Room = ({roomId}) => {
   const [createUser] = useMutation(createUserMutation, {
     variables: {roomId}
   });
+  console.log('🚀 ~ file: [roomId].js ~ line 87 ~ Room ~ initialData', initialData);
   console.log('🚀 ~ file: [roomId].js ~ line 90 ~ Room ~ data', data);
 
   const roomName = data?.roomUpdated?.name || initialData?.roomState?.name;
@@ -140,16 +138,15 @@ const Room = ({roomId}) => {
   const storyName = 'EPIC-122';
   const commonProps = {roomName, storyName}
 
-
-  if(stories.length === 0) setStage(ADD_STORY);
+  if(stage !== ADD_STORY && stories.length === 0) setStage(ADD_STORY);
 
   let StageComponent;
 
   if (stage === ADD_STORY) 
     StageComponent = <AddStory roomName={roomName} />;
   if (stage === START_VOTE) 
-    // StageComponent = <StartVote {...commonProps} moveToVote={moveToVote} />;
-    StageComponent = <Results {...commonProps} votes={votes} moveToVote={moveToVote} />;
+    StageComponent = <StartVote {...commonProps} moveToVote={moveToVote} />;
+    // StageComponent = <Results {...commonProps} votes={votes} moveToVote={moveToVote} />;
   if (stage === VOTE) 
     StageComponent = <Vote {...commonProps} moveToWait={moveToWait} />;
   if (stage === WAIT) {
@@ -175,14 +172,13 @@ const Room = ({roomId}) => {
         <RoomLayout>
           <div>
             {StageComponent}
-            <StoriesList stories={stories} addStory={openModalAddStory} />
+            <VoteLog stories={stories} />
           </div>
           <div>
             <Participants participants={users} />
             <Invite roomId={roomId} />
           </div>
         </RoomLayout>
-        <AddStoryModal isOpen={isOpenAddStory} closeModal={closeModalAddStory} />
         <UpdateUserModal isOpen={isOpenUpdateUser} closeModal={closeModalUpdateUser} userName={userName} setUserName={setUserName} />
       </main>
     </div>
