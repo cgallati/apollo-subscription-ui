@@ -13,21 +13,20 @@ const CardsLayout = styled.div`
 `;
 
 const Ballot = styled(Layout)`
-    background: #ffaa00;
+    background: #b3b3b3;
     width: 150px;
     height: 100px;
-    border: 2px solid black;
-    background-image: linear-gradient(white, white);
+    background-image: linear-gradient(#e5e5e5, #e5e5e5);
     background-size: 100% ${p=>p.percent}%;
     background-repeat: no-repeat;
+`
 
-    p{
-        -webkit-text-stroke: 1px white;
-    }
+const GreyedOutBallot = styled(Ballot)`
+    opacity: 50%;
 `
 
 
-export default function Results({roomName, storyName, votes, moveToVote}) {
+export default function Results({roomName, storyName, votes, moveToStartVote}) {
     const totalVotes = 5;
 
     return(
@@ -36,12 +35,16 @@ export default function Results({roomName, storyName, votes, moveToVote}) {
             <Text variant="order2" weight="bold" spaceStackEnd="xl">{storyName}</Text>
             <CardsLayout>
                 {votes.map((vote, index) =>
+                    vote.votes === 0 ? 
+                    <GreyedOutBallot  key={index} justify='center' align='center' percent={0}>
+                        <Text variant="display2">{vote.value}</Text>
+                    </GreyedOutBallot>:
                     <Ballot key={index} justify='center' align='center' percent={100-(vote.votes/totalVotes)*100 || 0}>
-                        <Text variant="display1">{vote.value}</Text>
+                        <Text variant="display2">{vote.value}</Text>
                     </Ballot>
                 )}
             </CardsLayout>
-            <Button variant='primary' onclick={moveToVote} spaceStackStart='l'>Vote Again</Button>
+            <Button variant='primary' onclick={moveToStartVote} spaceStackStart='l' stretch>start another vote +</Button>
         </StoriesContainer>
     )
 }
