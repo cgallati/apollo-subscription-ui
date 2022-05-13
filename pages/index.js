@@ -31,7 +31,7 @@ export default function CreateRoom() {
           <TextContainer>
               <Text variant="display1" weight="bold" spaceStackEnd="l">Plan like you play</Text>
               <Text variant="order3" spaceStackEnd="xxxl">
-                With Audi's Planning Poker, sprint planning has never been more &nbsp;
+                With Audi&apos;s Planning Poker, sprint planning has never been more &nbsp;
                 <s>playful</s> purposeful.
               </Text>
           </TextContainer>
