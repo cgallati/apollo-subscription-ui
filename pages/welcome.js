@@ -2,8 +2,6 @@ import Head from "next/head";
 import { Button, Layout, Text } from '@audi/audi-ui-react'
 import styled from 'styled-components';
 
-import Header from "../components/Header";
-
 const WelcomeContainer = styled(Layout)`
     margin-top: 10rem;
 `
@@ -21,7 +19,6 @@ export default function Welcome() {
       </Head>
 
       <main>
-        <Header username={'test'}/>
         <WelcomeContainer justify='center' align='center' direction='column' >
             <Text variant="order1" weight="bold" spaceStackEnd="m">Compelling Heading</Text>
             <Text variant="copy1" spaceStackEnd="xxl">

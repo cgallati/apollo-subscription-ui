@@ -1,22 +1,11 @@
 import Head from "next/head";
-import { Button, FormGroup, Layout, RadioButton, Text, TextField } from '@audi/audi-ui-react'
-import Header from "../components/Header";
+import { Button, Layout, Text } from '@audi/audi-ui-react'
 import styled from 'styled-components';
-import {gql, useMutation, useQuery, useSubscription} from "@apollo/client";
-import { useState } from "react"
 import { useRouter } from "next/router";
 
-const createRoomMutation = gql`
-    mutation CreateRoom($name: String) {
-        createRoom(name: $name){
-            id
-            name
-        }
-    }
-`
-
-const WideInput = styled(TextField)`
-    width: 300px;
+const TextContainer = styled.div`
+    width: 800px;
+    text-align: center;
 `
 
 const WelcomeContainer = styled(Layout)`
@@ -28,12 +17,7 @@ const BigButton = styled(Button)`
 `
 
 export default function CreateRoom() {
-  const [roomName, setRoomName] = useState('');
-  const [createRoom, { data }] = useMutation(createRoomMutation);
-
-  const router = useRouter()
-
-  if(data) router.push("room/" + data.createRoom.id)
+    const router = useRouter()
 
   return (
     <div>
@@ -43,34 +27,17 @@ export default function CreateRoom() {
       </Head>
 
       <main>
-        <Header username={'test'}/>
         <WelcomeContainer justify='center' align='center' direction='column' >
-            <Text variant="order1" weight="bold" spaceStackEnd="xxl">Create Room</Text>
-
-            <WideInput 
-              label="Room Name" 
-              inputId='room-name-input' 
-              minlength='2' 
-              spaceStackEnd="xxl" 
-              value={roomName}
-              onChange={(e=>setRoomName(e.target.value))}
-              required 
-            />
-
-            {/* <FormGroup label='Sorting System' spaceStackEnd="xxl" required>
-                <RadioButton inputId="radio-button-Fibonacci" name="basic" spaceStackEnd="l">
-                    Fibonacci
-                </RadioButton>
-                <RadioButton inputId="radio-button-tshirt" name="basic" spaceStackEnd="l">
-                    T-Shirt
-                </RadioButton>
-                <RadioButton inputId="radio-button-complexity" name="basic">
-                    Complexity
-                </RadioButton>
-            </FormGroup> */}
+          <TextContainer>
+              <Text variant="display1" weight="bold" spaceStackEnd="l">Plan like you play</Text>
+              <Text variant="order3" spaceStackEnd="xxxl">
+                With Audi's Planning Poker, sprint planning has never been more &nbsp;
+                <s>playful</s> purposeful.
+              </Text>
+          </TextContainer>
 
             <BigButton variant="primary" onClick={
-              () => createRoom({ variables: { name: roomName } })
+              () => router.push("create-room")
             }>
               Create Room
             </BigButton>
