@@ -1,6 +1,6 @@
 import { Table, TableHeader,TableRow, TableColumnHeadingCell, TableBody, TableCell, Text, Button } from "@audi/audi-ui-react"
 
-export default function StoriesList({stories}) {
+export default function StoriesList({stories, addStory}) {
     return(
 <div>
 <Table caption="Stories">
@@ -83,7 +83,7 @@ export default function StoriesList({stories}) {
     ))}
   </TableBody>
 </Table>
-<Button variant='secondary' stretch spaceStackStart="s">add a story +</Button>
+<Button variant='secondary' stretch spaceStackStart="s" onClick={addStory}>add a story +</Button>
 </div>
     )
 }

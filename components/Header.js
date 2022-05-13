@@ -3,7 +3,7 @@ import Image from "next/image";
 import styled from 'styled-components'
 
 const HeaderContainer = styled.nav`
-    padding: 1.5rem;
+    padding: 1rem;
     border-bottom: solid 2px black;
 `
 

@@ -10,7 +10,7 @@ const NoStoriesContainer = styled(Layout)`
     height: 100%;
 `
 
-export default function NoStories(roomName) {
+export default function NoStories({roomName}) {
     return(
         <NoStoriesContainer justify='center' align='center' direction='column'>
           <Text variant="order1" weight="bold" spaceStackEnd="xl">{roomName} Room</Text>
