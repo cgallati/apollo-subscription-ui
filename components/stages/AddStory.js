@@ -6,18 +6,20 @@ const BigButton = styled(Button)`
     height: 175px;
 `
 
-const NoStoriesContainer = styled(Layout)`
+const AddStoryContainer = styled(Layout)`
     width: 100%;
-    height: 45vh;
     padding: 3rem;
+    background-image: url("/GreyLogo.svg");
+    background-position: center;
+    background-repeat: no-repeat;
 `
 
 export default function AddStory({openModal}) {
     return(
-        <NoStoriesContainer justify='start' align='start' direction='column'>
+        <AddStoryContainer justify='start' align='start' direction='column'>
           <BigButton variant='primary' onClick={openModal}>
               start a vote +
             </BigButton>
-        </NoStoriesContainer>
+        </AddStoryContainer>
     )
 }

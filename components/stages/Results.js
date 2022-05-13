@@ -22,7 +22,7 @@ const Ballot = styled(Layout)`
 `
 
 const GreyedOutBallot = styled(Ballot)`
-    opacity: 50%;
+    opacity: 25%;
 `
 
 

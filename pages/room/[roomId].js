@@ -2,7 +2,8 @@ import Head from "next/head";
 import styled from 'styled-components'
 import {gql, useMutation, useQuery, useSubscription} from "@apollo/client";
 import {useEffect, useState} from "react"
-import { Divider, Text } from "@audi/audi-ui-react";
+import { Divider,Layout, Text } from "@audi/audi-ui-react";
+import Image from "next/image";
 
 import Header from "../../components/Header";
 import AddStoryModal from "../../components/AddStoryModal";
@@ -32,6 +33,7 @@ const RoomLayout = styled.div`
   grid-template-columns: 2.5fr 1fr;
   grid-template-rows: 1fr;
   background-color: #f2f2f2;
+  height: 89.5vh;
 `;
 
 const getRandomEmoji = () => {
@@ -176,8 +178,6 @@ const Room = ({roomId}) => {
 
   if (stage === ADD_STORY) 
     StageComponent = <AddStory openModal={openModal} />;
-    // StageComponent = <Results storyName={storyName} votes={votes} moveToStartVote={moveToStartVote} />;
-
   if (stage === START_VOTE) 
     StageComponent = <StartVote storyName={storyName} moveToVote={moveToVote} startVote={startVote} />;
   if (stage === VOTE) 
@@ -203,10 +203,10 @@ const Room = ({roomId}) => {
         <Header username={userName} showUsername={!isOpenUpdateUser}/>
 
         <RoomLayout>
-          <div>
+          <Layout direction='column'>
             {StageComponent}
             <VoteLog stories={stories} />
-          </div>
+          </Layout>
           <SideBar>
             <RoomName variant="order1" weight="bold" spaceStackStart="l" spaceStackEnd="l">{roomName}</RoomName>
             <Divider />

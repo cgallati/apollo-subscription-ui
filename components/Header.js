@@ -5,6 +5,7 @@ import styled from 'styled-components'
 const HeaderContainer = styled.nav`
     padding: 1rem;
     border-bottom: solid 2px black;
+    height: 6vh;
 `
 
 export default function Header({username, showUsername= true}) {
