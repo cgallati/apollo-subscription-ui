@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Button, Layout, Text } from '@audi/audi-ui-react'
 import styled from 'styled-components';
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const TextContainer = styled.div`
     width: 800px;
@@ -29,7 +30,8 @@ export default function CreateRoom() {
       <main>
         <WelcomeContainer justify='center' align='center' direction='column' >
           <TextContainer>
-              <Text variant="display1" weight="bold" spaceStackEnd="l">Plan like you play</Text>
+              <Image src="/audi.svg" alt="Audi Logo" width='138' height='48' />
+              <Text variant="display1" weight="bold" spaceStackStart="l" spaceStackEnd="l">Plan like you play</Text>
               <Text variant="order3" spaceStackEnd="xxxl">
                 With Audi's Planning Poker, sprint planning has never been more &nbsp;
                 <s>playful</s> purposeful.
