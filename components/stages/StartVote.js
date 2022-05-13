@@ -9,11 +9,16 @@ const StoriesContainer = styled(Layout)`
    height: 50vh;
 `
 
-export default function StartVote({ storyName, moveToVote}) {
+
+
+export default function StartVote({storyName, moveToVote, startVote}) {
     return(
         <StoriesContainer justify='center' align='center' direction='column'>
             <Text variant="order2" weight="bold" spaceStackEnd="xl">{storyName}</Text>
-            <BigButton variant='primary' onClick={moveToVote}>Start Vote</BigButton>
+            <BigButton variant='primary' onClick={() => {
+                startVote()
+                moveToVote()
+            }}>Start Vote</BigButton>
         </StoriesContainer>
     )
 }
